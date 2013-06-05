@@ -8,7 +8,7 @@ bag.request uses [http://github.com/mikeal/request](mikeal/request), with:
 
 * proxy setting based on environment variables http_proxy, HTTP_PROXY, https_proxy, HTTPS_PROXY
 * excludes proxy if URL host is localhost or 127.0.0.1
-* two seconds default timeout
+* thirty seconds default timeout
 * accepts self-signed SSL certificates
 * follow redirects by default
 * wildcard status code matching (e.g. 2xx, 50x)
