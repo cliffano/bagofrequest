@@ -156,6 +156,19 @@ buster.testCase('http - request', {
       done();
     });
   },
+  'should accept self-signed certificate': function (done) {
+    this.stub(request, 'post', function (params, cb) {
+      assert.isFalse(params.rejectUnauthorized);
+      cb(null, { statusCode: 200, body: 'somebody' });
+    });
+    function _success(result, cb) {
+      cb(null, result);
+    }
+    bag.request('POST', 'http://someurl', { handlers: { 200: _success }}, function (err, result) {
+      assert.isNull(err);
+      done();
+    });
+  },
   'should follow non-GET redirection': function (done) {
     this.stub(request, 'post', function (params, cb) {
       assert.isTrue(params.followAllRedirects);
