@@ -309,5 +309,26 @@ buster.testCase('http - proxy', {
   'should return undefined when url is not specified and no proxy environment variable exists': function () {
     this.stub(process, 'env', {});
     assert.equals(bag.proxy(), undefined);
+  },
+  'should return undefined when host is localhost or 127.0.0.1': function () {
+    this.stub(process, 'env', { HTTP_PROXY: 'http://someproxy', HTTPS_PROXY: 'https://someproxy' });
+    assert.equals(bag.proxy('http://localhost/somepath'), undefined);
+    assert.equals(bag.proxy('http://127.0.0.1/somepath'), undefined);
+    assert.equals(bag.proxy('https://localhost/somepath'), undefined);
+    assert.equals(bag.proxy('https://127.0.0.1/somepath'), undefined);
+  },
+  'should return undefined when host is on custom ignore host list': function () {
+    var opts = {
+      noProxyHosts: ['somehost1', 'somehost2']
+    };
+    assert.equals(bag.proxy('http://somehost1', opts), undefined);
+    assert.equals(bag.proxy('http://somehost2', opts), undefined);
+  },
+  'should return proxy when host is not on custom ignore host list': function () {
+    this.stub(process, 'env', { HTTP_PROXY: 'http://someproxy' });
+    var opts = {
+      noProxyHosts: ['somehost1', 'somehost2']
+    };
+    assert.equals(bag.proxy('http://somehost3', opts), 'http://someproxy');
   }
 });

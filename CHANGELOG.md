@@ -1,5 +1,6 @@
 ### 0.0.3-pre
-*
+* Add no-proxy hosts support to proxy
+* Fix proxy to fallback to HTTP_PROXY when http_proxy doesn't exist
 
 ### 0.0.2
 * Set rejectUnauthorized default to false
