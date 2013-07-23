@@ -292,7 +292,7 @@ buster.testCase('http - retry', {
       clock.tick(expectedTime);
     });
     bag.request('GET', 'http://someurl', { retry: true }, function (err, result) {
-      assert.equals(err.message, 'Unexpected status code: 503\nResponse body:\nsomebody10');
+      assert.isTrue(err.retryLimitHit);
       assert.equals(result, undefined);
       assert.equals(callCount, 10);
       done();
