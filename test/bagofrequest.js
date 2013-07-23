@@ -257,6 +257,7 @@ buster.testCase('http - retry', {
   },
   'should retry when a temporary error occurs': function (done) {
     var callCount = 0;
+    var clock = this.useFakeTimers();
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
       callCount++;
@@ -264,7 +265,9 @@ buster.testCase('http - retry', {
       assert.equals(params.proxy, undefined);
       assert.equals(params.qs, undefined);
       if (callCount === 1) {
-        return cb(null, { statusCode: 503, body: 'somebody' });
+        cb(null, { statusCode: 503, body: 'somebody' });
+        clock.tick(1000);
+        return;
       }
       cb(null, { statusCode: 200, body: 'somebody' });
     });
@@ -276,6 +279,8 @@ buster.testCase('http - retry', {
   },
   'should call back with last result if max retries is hit': function (done) {
     var callCount = 0;
+    var expectedTime = 500;
+    var clock = this.useFakeTimers();
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
       callCount++;
@@ -283,6 +288,8 @@ buster.testCase('http - retry', {
       assert.equals(params.proxy, undefined);
       assert.equals(params.qs, undefined);
       cb(null, { statusCode: 503, body: 'somebody' + callCount });
+      expectedTime += expectedTime * 0.5;
+      clock.tick(expectedTime);
     });
     bag.request('GET', 'http://someurl', { retry: true }, function (err, result) {
       assert.equals(err.message, 'Unexpected status code: 503\nResponse body:\nsomebody10');
