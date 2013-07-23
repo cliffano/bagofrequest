@@ -237,6 +237,62 @@ buster.testCase('http - request', {
   }
 });
 
+buster.testCase('http - retry', {
+  'should call back instantly if a non temporary error occurs': function (done) {
+    var callCount = 0;
+    this.stub(process, 'env', {});
+    this.stub(request, 'get', function (params, cb) {
+      callCount++;
+      assert.equals(params.url, 'http://someurl');
+      assert.equals(params.proxy, undefined);
+      assert.equals(params.qs, undefined);
+      cb(null, { statusCode: 400, body: 'somebody' });
+    });
+    bag.request('GET', 'http://someurl', { retry: true }, function (err, result) {
+      assert.equals(err.message, 'Unexpected status code: 400\nResponse body:\nsomebody');
+      assert.equals(result, undefined);
+      assert.equals(callCount, 1);
+      done();
+    });
+  },
+  'should retry when a temporary error occurs': function (done) {
+    var callCount = 0;
+    this.stub(process, 'env', {});
+    this.stub(request, 'get', function (params, cb) {
+      callCount++;
+      assert.equals(params.url, 'http://someurl');
+      assert.equals(params.proxy, undefined);
+      assert.equals(params.qs, undefined);
+      if (callCount === 1) {
+        return cb(null, { statusCode: 503, body: 'somebody' });
+      }
+      cb(null, { statusCode: 200, body: 'somebody' });
+    });
+    bag.request('GET', 'http://someurl', { retry: true }, function (err, result) {
+      assert.equals(err.message, 'Unexpected status code: 200\nResponse body:\nsomebody');
+      assert.equals(callCount, 2);
+      done();
+    });
+  },
+  'should call back with last result if max retries is hit': function (done) {
+    var callCount = 0;
+    this.stub(process, 'env', {});
+    this.stub(request, 'get', function (params, cb) {
+      callCount++;
+      assert.equals(params.url, 'http://someurl');
+      assert.equals(params.proxy, undefined);
+      assert.equals(params.qs, undefined);
+      cb(null, { statusCode: 503, body: 'somebody' + callCount });
+    });
+    bag.request('GET', 'http://someurl', { retry: true }, function (err, result) {
+      assert.equals(err.message, 'Unexpected status code: 503\nResponse body:\nsomebody10');
+      assert.equals(result, undefined);
+      assert.equals(callCount, 10);
+      done();
+    });
+  }
+});
+
 buster.testCase('http - proxy', {
   'should return http proxy when url uses http and both http and https proxy exist': function () {
     this.stub(process, 'env', { http_proxy: 'http://someproxy', https_proxy: 'https://someproxy' });
