@@ -278,9 +278,10 @@ buster.testCase('http - retry', {
     });
   },
   'should call back with last result if max retries is hit': function (done) {
-    var callCount = 0;
-    var expectedTime = 500;
-    var clock = this.useFakeTimers();
+    var callCount = 0,
+      expectedTime = 500,
+      clock = this.useFakeTimers(),
+      opts = { retry: true, handlers: { '503': testHandler }};
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
       callCount++;
@@ -291,9 +292,35 @@ buster.testCase('http - retry', {
       expectedTime += expectedTime * 0.5;
       clock.tick(expectedTime);
     });
-    bag.request('GET', 'http://someurl', { retry: true }, function (err, result) {
-      assert.isTrue(err.retryLimitHit);
-      assert.equals(result, undefined);
+    function testHandler(result, cb) {
+      cb(null, result);
+    }
+    bag.request('GET', 'http://someurl', opts, function (err, result) {
+      assert.isTrue(result._retry.retryLimitHit);
+      assert.equals(callCount, 10);
+      done();
+    });
+  },
+  'should support wildcard matches': function (done) {
+    var callCount = 0,
+      expectedTime = 500,
+      clock = this.useFakeTimers(),
+      opts = { retry: { statusCodes: [ '5xx' ], scale: 0.5, delay: 500, maxRetries: 10 }, handlers: { '513': testHandler }};
+    this.stub(process, 'env', {});
+    this.stub(request, 'get', function (params, cb) {
+      callCount++;
+      assert.equals(params.url, 'http://someurl');
+      assert.equals(params.proxy, undefined);
+      assert.equals(params.qs, undefined);
+      cb(null, { statusCode: 513, body: 'somebody' + callCount });
+      expectedTime += expectedTime * 0.5;
+      clock.tick(expectedTime);
+    });
+    function testHandler(result, cb) {
+      cb(null, result);
+    }
+    bag.request('GET', 'http://someurl', opts, function (err, result) {
+      assert.isTrue(result._retry.retryLimitHit);
       assert.equals(callCount, 10);
       done();
     });
