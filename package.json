@@ -28,7 +28,7 @@
     "request": "~2.25.0"
   },
   "devDependencies": {
-    "buster": "0.6.12"
+    "buster": "~0.6.12"
   },
   "scripts": {},
   "engines": {
