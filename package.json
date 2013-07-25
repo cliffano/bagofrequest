@@ -24,8 +24,8 @@
     "test": "./test"
   },
   "dependencies": {
-    "request": "2.16.2",
-    "async": "~0.2.9"
+    "async": "~0.2.9",
+    "request": "~2.16.2"
   },
   "devDependencies": {
     "buster": "0.6.12"
