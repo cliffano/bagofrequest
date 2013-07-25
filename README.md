@@ -15,6 +15,7 @@ bag.request uses [http://github.com/mikeal/request](mikeal/request), with:
 * custom handlers based on status code
 * default unexpected status code error with request body included in message
 * all bag.request defaults can be overriden by passing mikeal/request options
+* retry support with configurable delay 
 
 bag.proxy is a convenient function to retrieve proxy based on URL and environment value:
 

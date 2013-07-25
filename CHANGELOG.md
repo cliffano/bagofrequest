@@ -1,5 +1,5 @@
 ### 0.0.4-pre
-* 
+* Add request retry support (Daniel Brain)
 
 ### 0.0.3
 * Add no-proxy hosts support to proxy
