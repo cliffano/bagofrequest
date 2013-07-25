@@ -238,7 +238,26 @@ buster.testCase('http - request', {
 });
 
 buster.testCase('http - retry', {
-  'should call back instantly if a non temporary error occurs': function (done) {
+  'should finish instantly if there is no error': function (done) {
+    function successHandler(result, cb) {
+      cb(null, result);
+    }
+    this.stub(process, 'env', {});
+    this.stub(request, 'get', function (params, cb) {
+      assert.equals(params.url, 'http://someurl');
+      assert.equals(params.proxy, undefined);
+      assert.equals(params.qs, undefined);
+      cb(null, { statusCode: 200, body: 'somebody' });
+    });
+    bag.request('GET', 'http://someurl', { retry: true, handlers: { 200: successHandler } }, function (err, result) {
+      assert.isNull(err);
+      assert.equals(result.statusCode, 200);
+      assert.equals(result._retry.retryCount, 0);
+      assert.isFalse(result._retry.retryLimitHit);
+      done();
+    });
+  },
+  'should finish instantly if a non temporary error occurs (non retryable status codes)': function (done) {
     var callCount = 0;
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
@@ -255,9 +274,9 @@ buster.testCase('http - retry', {
       done();
     });
   },
-  'should retry when a temporary error occurs': function (done) {
-    var callCount = 0;
-    var clock = this.useFakeTimers();
+  'should retry when a temporary error occurs before an unexpected result error': function (done) {
+    var callCount = 0,
+      clock = this.useFakeTimers();
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
       callCount++;
@@ -269,19 +288,22 @@ buster.testCase('http - retry', {
         clock.tick(1000);
         return;
       }
-      cb(null, { statusCode: 200, body: 'somebody' });
+      cb(null, { statusCode: 409, body: 'somebody' });
     });
     bag.request('GET', 'http://someurl', { retry: true }, function (err, result) {
-      assert.equals(err.message, 'Unexpected status code: 200\nResponse body:\nsomebody');
+      assert.equals(err.message, 'Unexpected status code: 409\nResponse body:\nsomebody');
       assert.equals(callCount, 2);
+      assert.equals(result, undefined);
       done();
     });
   },
-  'should call back with last result if max retries is hit': function (done) {
+  'should finish with last result if max retries is hit': function (done) {
     var callCount = 0,
       expectedTime = 500,
       clock = this.useFakeTimers(),
-      opts = { retry: true, handlers: { '503': testHandler }};
+      opts = {
+        retry: true,
+        handlers: { '503': testHandler }};
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
       callCount++;
@@ -297,15 +319,18 @@ buster.testCase('http - retry', {
     }
     bag.request('GET', 'http://someurl', opts, function (err, result) {
       assert.isTrue(result._retry.retryLimitHit);
+      assert.equals(result._retry.retryCount, 10);
       assert.equals(callCount, 10);
       done();
     });
   },
-  'should support wildcard matches': function (done) {
+  'should support wildcard matches in custom retry options': function (done) {
     var callCount = 0,
       expectedTime = 500,
       clock = this.useFakeTimers(),
-      opts = { retry: { statusCodes: [ '5xx' ], scale: 0.5, delay: 500, maxRetries: 10 }, handlers: { '513': testHandler }};
+      opts = {
+        retry: { statusCodes: [ '5xx' ], scale: 0.5, delay: 500, maxRetries: 37 },
+        handlers: { '513': testHandler }};
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
       callCount++;
@@ -321,7 +346,7 @@ buster.testCase('http - retry', {
     }
     bag.request('GET', 'http://someurl', opts, function (err, result) {
       assert.isTrue(result._retry.retryLimitHit);
-      assert.equals(callCount, 10);
+      assert.equals(callCount, 37);
       done();
     });
   }
