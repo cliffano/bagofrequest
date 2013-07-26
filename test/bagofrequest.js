@@ -297,7 +297,7 @@ buster.testCase('http - retry', {
       done();
     });
   },
-  'should finish with last result if max retries is hit': function (done) {
+  'should finish if max retries is hit': function (done) {
     var callCount = 0,
       expectedTime = 500,
       clock = this.useFakeTimers(),
@@ -320,7 +320,61 @@ buster.testCase('http - retry', {
     bag.request('GET', 'http://someurl', opts, function (err, result) {
       assert.isTrue(result._retry.retryLimitHit);
       assert.equals(result._retry.retryCount, 10);
-      assert.equals(callCount, 10);
+      assert.equals(callCount, 11);
+      done();
+    });
+  },
+  'should not retry when max retries is set to 0': function (done) {
+    var callCount = 0,
+      expectedTime = 500,
+      clock = this.useFakeTimers(),
+      opts = {
+        retry: { statusCodes: [ '5xx' ], scale: 0, delay: 0, maxRetries: 0 },
+        handlers: { '503': testHandler }};
+    this.stub(process, 'env', {});
+    this.stub(request, 'get', function (params, cb) {
+      callCount++;
+      assert.equals(params.url, 'http://someurl');
+      assert.equals(params.proxy, undefined);
+      assert.equals(params.qs, undefined);
+      cb(null, { statusCode: 503, body: 'somebody' + callCount });
+      expectedTime += expectedTime * 0.5;
+      clock.tick(expectedTime);
+    });
+    function testHandler(result, cb) {
+      cb(null, result);
+    }
+    bag.request('GET', 'http://someurl', opts, function (err, result) {
+      assert.isTrue(result._retry.retryLimitHit);
+      assert.equals(result._retry.retryCount, 0);
+      assert.equals(callCount, 1);
+      done();
+    });
+  },
+  'should retry only once when max retries is set to 1': function (done) {
+    var callCount = 0,
+      expectedTime = 500,
+      clock = this.useFakeTimers(),
+      opts = {
+        retry: { statusCodes: [ '5xx' ], scale: 0, delay: 0, maxRetries: 1 },
+        handlers: { '503': testHandler }};
+    this.stub(process, 'env', {});
+    this.stub(request, 'get', function (params, cb) {
+      callCount++;
+      assert.equals(params.url, 'http://someurl');
+      assert.equals(params.proxy, undefined);
+      assert.equals(params.qs, undefined);
+      cb(null, { statusCode: 503, body: 'somebody' + callCount });
+      expectedTime += expectedTime * 0.5;
+      clock.tick(expectedTime);
+    });
+    function testHandler(result, cb) {
+      cb(null, result);
+    }
+    bag.request('GET', 'http://someurl', opts, function (err, result) {
+      assert.isTrue(result._retry.retryLimitHit);
+      assert.equals(result._retry.retryCount, 1);
+      assert.equals(callCount, 2);
       done();
     });
   },
@@ -346,7 +400,7 @@ buster.testCase('http - retry', {
     }
     bag.request('GET', 'http://someurl', opts, function (err, result) {
       assert.isTrue(result._retry.retryLimitHit);
-      assert.equals(callCount, 37);
+      assert.equals(callCount, 38);
       done();
     });
   }
