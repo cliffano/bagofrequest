@@ -1,4 +1,7 @@
-### 0.0.4-pre
+### 0.0.5-pre
+*
+
+### 0.0.4
 * Add request retry support (Daniel Brain)
 
 ### 0.0.3
