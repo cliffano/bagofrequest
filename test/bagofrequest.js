@@ -107,11 +107,10 @@ buster.testCase('http - request', {
   'should pass error results to error handler if specified': function (done) {
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
-      cb(new Error('triumph'), { statusCode: '200', body: 'somebody' });
+      cb(new Error('triumph'));
     });
     function _error(err, result, cb) {
       assert.equals(err.message, 'triumph');
-      assert.equals(result.statusCode, 200);
       cb(err, result);
     }
     function _honeypot(result, cb) {
@@ -119,7 +118,6 @@ buster.testCase('http - request', {
     }
     bag.request('GET', 'http://someurl', { proxy: 'http://someproxy', queryStrings: { param1: 'value1' }, handlers: { error: _error, 'xxx': _honeypot } }, function (err, result) {
       assert.equals(err.message, 'triumph');
-      assert.equals(result.statusCode, 200);
       done();
     });
   },
@@ -428,7 +426,7 @@ buster.testCase('http - retry', {
       expectedTime = 500,
       clock = this.useFakeTimers(),
       opts = {
-        retry: { statusCodes: [ '5xx' ], scale: 0, delay: 0, maxRetries: 1, retryOnSocketError: true },
+        retry: { statusCodes: [ '5xx' ], scale: 0, delay: 0, maxRetries: 1, errorCodes: ['CHEESES'] },
         handlers: { 'error': testErrorHandler }};
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
@@ -436,7 +434,68 @@ buster.testCase('http - retry', {
       assert.equals(params.url, 'http://someurl');
       assert.equals(params.proxy, undefined);
       assert.equals(params.qs, undefined);
-      cb(new Error('I am such a socket error'));
+      var error = new Error('I am such a socket error');
+      error.code = 'CHEESES';
+      cb(error);
+      expectedTime += expectedTime * 0.5;
+      clock.tick(expectedTime);
+    });
+    function testErrorHandler(err, result, cb) {
+      cb(err, result);
+    }
+    bag.request('GET', 'http://someurl', opts, function (err, result) {
+      assert.equals(err.message, 'I am such a socket error');
+      assert.isTrue(result._retry.retryLimitHit);
+      assert.equals(result._retry.retryCount, 1);
+      assert.equals(callCount, 2);
+      done();
+    });
+  },
+  'should error on unsupported socket error': function (done) {
+    var callCount = 0,
+      expectedTime = 500,
+      clock = this.useFakeTimers(),
+      opts = {
+        retry: { statusCodes: [ '5xx' ], scale: 0, delay: 0, maxRetries: 1, errorCodes: ['CHEESES'] },
+        handlers: { 'error': testErrorHandler }};
+    this.stub(process, 'env', {});
+    this.stub(request, 'get', function (params, cb) {
+      callCount++;
+      assert.equals(params.url, 'http://someurl');
+      assert.equals(params.proxy, undefined);
+      assert.equals(params.qs, undefined);
+      var error = new Error('I am such a socket error');
+      error.code = 'NOTCHEESES';
+      cb(error);
+      expectedTime += expectedTime * 0.5;
+      clock.tick(expectedTime);
+    });
+    function testErrorHandler(err, result, cb) {
+      cb(err, result);
+    }
+    bag.request('GET', 'http://someurl', opts, function (err, result) {
+      assert.equals(err.message, 'I am such a socket error');
+      assert.isFalse(result._retry.retryLimitHit);
+      assert.equals(callCount, 1);
+      done();
+    });
+  },
+  'should retry on any socket error if true': function (done) {
+    var callCount = 0,
+      expectedTime = 500,
+      clock = this.useFakeTimers(),
+      opts = {
+        retry: { statusCodes: [ '5xx' ], scale: 0, delay: 0, maxRetries: 1, errorCodes: true },
+        handlers: { 'error': testErrorHandler }};
+    this.stub(process, 'env', {});
+    this.stub(request, 'get', function (params, cb) {
+      callCount++;
+      assert.equals(params.url, 'http://someurl');
+      assert.equals(params.proxy, undefined);
+      assert.equals(params.qs, undefined);
+      var error = new Error('I am such a socket error');
+      error.code = 'CHEESES';
+      cb(error);
       expectedTime += expectedTime * 0.5;
       clock.tick(expectedTime);
     });
