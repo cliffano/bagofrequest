@@ -1,4 +1,7 @@
-### 0.0.5-pre
+### 0.0.6-pre
+*
+
+### 0.0.5
 * Add custom error handler and error codes matching to retry support (Daniel Brain)
 
 ### 0.0.4
