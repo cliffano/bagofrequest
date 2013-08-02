@@ -1,5 +1,5 @@
 ### 0.0.5-pre
-*
+* Add custom error handler and error codes matching to retry support (Daniel Brain)
 
 ### 0.0.4
 * Add request retry support (Daniel Brain)
