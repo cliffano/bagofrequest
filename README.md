@@ -1,4 +1,12 @@
-Bag Of Request [![Build Status](https://secure.travis-ci.org/cliffano/bagofrequest.png?branch=master)](http://travis-ci.org/cliffano/bagofrequest) [![Dependencies Status](https://david-dm.org/cliffano/bagofrequest.png)](http://david-dm.org/cliffano/bagofrequest) [![Published Version](https://badge.fury.io/js/bagofrequest.png)](http://badge.fury.io/js/bagofrequest)
+<img align="right" src="https://raw.github.com/cliffano/bagofrequest/master/avatar.jpg" alt="Avatar"/>
+
+[![Build Status](https://secure.travis-ci.org/cliffano/bagofrequest.png?branch=master)](http://travis-ci.org/cliffano/bagofrequest)
+[![Dependencies Status](https://david-dm.org/cliffano/bagofrequest.png)](http://david-dm.org/cliffano/bagofrequest)
+[![Published Version](https://badge.fury.io/js/bagofrequest.png)](http://badge.fury.io/js/bagofrequest)
+<br/>
+[![npm Badge](https://nodei.co/npm/bagofrequest.png)](http://npmjs.org/package/bagofrequest)
+
+Bag Of Request
 --------------
 <img align="right" src="https://raw.github.com/cliffano/bagofrequest/master/avatar.jpg" alt="Avatar"/>
 
