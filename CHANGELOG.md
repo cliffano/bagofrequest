@@ -1,4 +1,7 @@
-### 0.0.6-pre
+### 0.0.7-pre
+*
+
+### 0.0.6
 * Change test to use buster-node + referee
 * Change min node to v0.8.0
 
