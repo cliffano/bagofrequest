@@ -1,6 +1,8 @@
-var buster = require('buster'),
+var buster = require('buster-node'),
   bag = require('../lib/bagofrequest'),
-  request = require('request');
+  referee = require('referee'),
+  request = require('request'),
+  assert = referee.assert;
 
 buster.testCase('http - request', {
   'should pass error to callback when there is an error while sending request': function (done) {
@@ -53,7 +55,7 @@ buster.testCase('http - request', {
   'should handle result based on wildcard status code': function (done) {
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
-      cb(null, { statusCode: '200', body: 'somebody' });
+      cb(null, { statusCode: 200, body: 'somebody' });
     });
     function _success(result, cb) {
       assert.equals(result.statusCode, 200);
@@ -71,7 +73,7 @@ buster.testCase('http - request', {
   'should handle result based on wildcard status code with multiple wildcard characters': function (done) {
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
-      cb(null, { statusCode: '200', body: 'somebody' });
+      cb(null, { statusCode: 200, body: 'somebody' });
     });
     function _success(result, cb) {
       assert.equals(result.statusCode, 200);
@@ -89,7 +91,7 @@ buster.testCase('http - request', {
   'should handle result based on first match when there are multiple matches': function (done) {
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
-      cb(null, { statusCode: '200', body: 'somebody' });
+      cb(null, { statusCode: 200, body: 'somebody' });
     });
     function _success(result, cb) {
       assert.equals(result.statusCode, 200);
