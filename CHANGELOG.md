@@ -1,5 +1,6 @@
 ### 0.0.6-pre
 * Change test to use buster-node + referee
+* Change min node to v0.8.0
 
 ### 0.0.5
 * Add custom error handler and error codes matching to retry support (Daniel Brain)
