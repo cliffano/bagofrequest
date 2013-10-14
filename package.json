@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "async": "~0.2.9",
-    "request": "~2.25.0"
+    "request": "~2.27.0"
   },
   "devDependencies": {
     "buster-node": "~0.7.0",
