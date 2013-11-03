@@ -10,8 +10,7 @@ Bag Of Request
 --------------
 Bag Of Request contains request utility functions.
 
-bag.request 
------------
+bagofrequest#request 
 
 Send http request using [http://github.com/mikeal/request](mikeal/request), with the following additional features:
 
@@ -26,8 +25,7 @@ Send http request using [http://github.com/mikeal/request](mikeal/request), with
 * accepts self-signed SSL certificates
 * all of the above defaults can be overridden
 
-bag.proxy
----------
+bagofrequest#proxy
 
 Proxy retrieval based on URL and environment variables:
 
