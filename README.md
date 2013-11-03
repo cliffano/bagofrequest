@@ -52,7 +52,66 @@ Usage
 
     var bag = require('bagofrequest');
 
-    bag.request('get', 'http://google.com.au', { timeout: 30000 }, function (err, result) {
-    });
+    // send http get request with query strings, timeout, and specified status code-based handlers
+    bag.request('get', 'http://somehost', {
+        queryStrings: {
+          param1: 'value1',
+          param2: 'value2'
+        },
+        timeout: 30000,
+        handlers: {
+          '2xx': function (result, cb) {
+            cb(null, result.somedata);
+          },
+          404: function (result, cb) {
+            cb(new Error('Item ' + result.itemId + ' cannot be found'));
+          }
+        }
+      },
+      function (err, result) {
+        // response with unexpected status code (no registered handler) will be passed as error
+      });
 
-    var proxy = bag.proxy('https://google.com.au');
+    // send http post request
+    bag.request('post', 'http://somehost', {
+        headers: {
+          'content-type': 'application/json'
+        },
+        json: {
+          prop1: 'value1',
+          prop2: 'value2'
+        }
+      },
+      function (err, result) {
+      });
+
+    // send request with options to override any bagofrequest defaults (will be passed to mikeal/request)
+    bag.request('get', 'http://somehost', {
+        requestOpts: {
+          foo: 'bar'
+        }
+      },
+      function (err, result) {
+      });
+
+    // send request with retry settings
+    bag.request('get', 'http://somehost', {
+        retry: {
+          errorCodes: true, // retry on any error 
+          statusCodes: [404, 503], // retry when response status code is 404 or 503
+          scale: 0.5, // increase delay by half on each retry
+          delay: 1000, // wait 1 second before retrying
+          maxRetries: 10 // only retry 10 times at most
+        }
+      },
+      function (err, result) {
+      });
+
+    // get proxy based on URL protocol
+    // will return undefined when host is localhost or 127.0.0.1
+    var proxy = bag.proxy('https://somehost');
+
+    // get proxy with custom proxy exclusion
+    var proxy = bag.proxy('http://somelocalhost', {
+      noProxyHosts: ['somelocalhost']
+    });
