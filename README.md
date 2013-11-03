@@ -12,7 +12,7 @@ Bag Of Request contains request utility functions.
 
 bagofrequest#request 
 
-Send http request using [http://github.com/mikeal/request](mikeal/request), with the following additional features:
+Send http request using [mikeal/request](http://github.com/mikeal/request), with the following additional features:
 
 * status code-based response handlers registration
 * wildcard status code support (e.g. 2xx, 50x)
