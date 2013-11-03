@@ -8,8 +8,6 @@
 
 Bag Of Request
 --------------
-<img align="right" src="https://raw.github.com/cliffano/bagofrequest/master/avatar.jpg" alt="Avatar"/>
-
 Bag Of Request contains request utility functions.
 
 bag.request uses [http://github.com/mikeal/request](mikeal/request), with:
