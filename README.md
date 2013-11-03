@@ -10,25 +10,31 @@ Bag Of Request
 --------------
 Bag Of Request contains request utility functions.
 
-bag.request uses [http://github.com/mikeal/request](mikeal/request), with:
+bag.request 
+-----------
 
-* proxy setting based on environment variables http_proxy, HTTP_PROXY, https_proxy, HTTPS_PROXY
-* excludes proxy if URL host is localhost or 127.0.0.1
-* thirty seconds default timeout
+Send http request using [http://github.com/mikeal/request](mikeal/request), with the following additional features:
+
+* status code-based response handlers registration
+* wildcard status code support (e.g. 2xx, 50x)
+* unexpected status code error handling with request body included in message
+* request retry with increasing delay and maximum retries
+* proxy setting based on env vars http_proxy, HTTP_PROXY, https_proxy, HTTPS_PROXY
+* proxy exclusion for localhost and 127.0.0.1
+* request timeout of 30 seconds
+* follow redirects
 * accepts self-signed SSL certificates
-* follow redirects by default
-* wildcard status code matching (e.g. 2xx, 50x)
-* custom handlers based on status code
-* default unexpected status code error with request body included in message
-* all bag.request defaults can be overriden by passing mikeal/request options
-* retry support with configurable delay 
+* all of the above defaults can be overridden
 
-bag.proxy is a convenient function to retrieve proxy based on URL and environment value:
+bag.proxy
+---------
+
+Proxy retrieval based on URL and environment variables:
 
 * if URL uses http, then sets proxy to http_proxy or HTTP_PROXY
-* if URL uses https, then sets proxy to htps_proxy or HTTPS_PROXY or http_proxy or HTTP_PROXY
-* if URL does not have a protocol, then assume http protocol
-* if URL is not provided, then sets proxy to http_proxy or HTTP_PROXY or https_proxy or HTTPS_PROXY
+* if URL uses https, then sets proxy to htps_proxy or HTTPS_PROXY, otherwise fallback to http_proxy or HTTP_PROXY
+* if URL does not have a protocol, assume http protocol
+* if URL is not provided, then set proxy to http_proxy or HTTP_PROXY, otherwise fallback to https_proxy or HTTPS_PROXY
 
 Installation
 ------------
