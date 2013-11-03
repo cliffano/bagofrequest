@@ -50,6 +50,8 @@ Usage
 
     var bag = require('bagofrequest');
 
+Request:
+
     // send http get request with query strings, timeout, and specified status code-based handlers
     bag.request('get', 'http://somehost', {
         queryStrings: {
@@ -104,6 +106,15 @@ Usage
       },
       function (err, result) {
       });
+
+    // send request with custom proxy
+    bag.request('get', 'http://somehost', {
+        proxy: 'http://user:pass@someproxy:1234'
+      },
+      function (err, result) {
+      });
+
+Proxy:
 
     // get proxy based on URL protocol
     // will return undefined when host is localhost or 127.0.0.1
