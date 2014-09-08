@@ -1,9 +1,9 @@
-### 0.0.7-pre
-*
+### 0.1.0-pre
+* Set min node engine to v0.10.0
 
 ### 0.0.6
 * Change test to use buster-node + referee
-* Change min node to v0.8.0
+* Set min node engine to v0.8.0
 
 ### 0.0.5
 * Add custom error handler and error codes matching to retry support (Daniel Brain)
