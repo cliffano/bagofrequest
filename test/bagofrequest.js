@@ -5,6 +5,9 @@ var buster = require('buster-node'),
   assert = referee.assert;
 
 buster.testCase('http - request', {
+  setUp: function () {
+    this.mock({});
+  },
   'should pass error to callback when there is an error while sending request': function (done) {
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
@@ -257,6 +260,9 @@ buster.testCase('http - request', {
 });
 
 buster.testCase('http - retry', {
+  setUp: function () {
+    this.mock({});
+  },
   'should finish instantly if there is no error': function (done) {
     function successHandler(result, cb) {
       cb(null, result);
@@ -515,6 +521,9 @@ buster.testCase('http - retry', {
 });
 
 buster.testCase('http - proxy', {
+  setUp: function () {
+    this.mock({});
+  },
   'should return http proxy when url uses http and both http and https proxy exist': function () {
     this.stub(process, 'env', { http_proxy: 'http://someproxy', https_proxy: 'https://someproxy' });
     assert.equals(bag.proxy('http://someurl'), 'http://someproxy');

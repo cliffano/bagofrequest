@@ -6,6 +6,7 @@ var buster = require('buster-node'),
 buster.testCase('http - request', {
   setUp: function () {
     this.timeout = 5000;
+    this.mock({});
   },
   'should send GET request': function (done) {
     bag.request('GET', 'http://google.com', {
@@ -25,6 +26,9 @@ buster.testCase('http - request', {
 });
 
 buster.testCase('http - proxy', {
+  setUp: function () {
+    this.mock({});
+  },
   'should return env var proxy': function () {
     process.env.http_proxy = 'http://someproxy';
     assert.equals(bag.proxy('http://someurl'), 'http://someproxy');

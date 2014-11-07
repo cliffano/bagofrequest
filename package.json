@@ -25,11 +25,11 @@
   },
   "dependencies": {
     "async": "~0.9.0",
-    "request": "~2.45.0"
+    "request": "~2.47.0"
   },
   "devDependencies": {
     "buster-node": "~0.7.0",
-    "referee": "~1.0.1"
+    "referee": "~1.1.0"
   },
   "scripts": {},
   "engines": {
