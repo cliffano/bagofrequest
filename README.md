@@ -125,3 +125,8 @@ Proxy:
     var proxy = bag.proxy('http://somelocalhost', {
       noProxyHosts: ['somelocalhost']
     });
+
+Colophon
+--------
+
+[Developer's Guide](http://cliffano.github.io/developers_guide.html#nodejs)
