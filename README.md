@@ -130,3 +130,11 @@ Colophon
 --------
 
 [Developer's Guide](http://cliffano.github.io/developers_guide.html#nodejs)
+
+Build reports:
+
+* [Code complexity report](http://cliffano.github.io/bagofrequest/bob/complexity/plato/index.html)
+* [Unit tests report](http://cliffano.github.io/bagofrequest/bob/test/buster.out)
+* [Test coverage report](http://cliffano.github.io/bagofrequest/bob/coverage/buster-istanbul/lcov-report/lib/index.html)
+* [Integration tests report](http://cliffano.github.io/bagofrequest/bob/test-integration/buster.out)
+* [API Documentation](http://cliffano.github.io/bagofrequest/bob/doc/dox-foundation/index.html)
