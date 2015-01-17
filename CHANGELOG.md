@@ -9,10 +9,10 @@
 * Set min node engine to v0.8.0
 
 ### 0.0.5
-* Add custom error handler and error codes matching to retry support (Daniel Brain)
+* Add custom error handler and error codes matching to retry support [Daniel Brain](https://github.com/dbrain)
 
 ### 0.0.4
-* Add request retry support (Daniel Brain)
+* Add request retry support [Daniel Brain](https://github.com/dbrain)
 
 ### 0.0.3
 * Add no-proxy hosts support to proxy
