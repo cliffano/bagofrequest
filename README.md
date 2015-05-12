@@ -1,7 +1,7 @@
 <img align="right" src="https://raw.github.com/cliffano/bagofrequest/master/avatar.jpg" alt="Avatar"/>
 
-[![Build Status](https://secure.travis-ci.org/cliffano/bagofrequest.png?branch=master)](http://travis-ci.org/cliffano/bagofrequest)
-[![Dependencies Status](https://david-dm.org/cliffano/bagofrequest.png)](http://david-dm.org/cliffano/bagofrequest)
+[![Build Status](https://img.shields.io/travis/cliffano/bagofrequest.svg)](http://travis-ci.org/cliffano/bagofrequest)
+[![Dependencies Status](https://img.shields.io/david/cliffano/bagofrequest.svg)](http://david-dm.org/cliffano/bagofrequest)
 [![Coverage Status](https://coveralls.io/repos/cliffano/bagofrequest/badge.png?branch=master)](https://coveralls.io/r/cliffano/bagofrequest?branch=master)
 [![Published Version](https://badge.fury.io/js/bagofrequest.png)](http://badge.fury.io/js/bagofrequest)
 <br/>
