@@ -1,5 +1,8 @@
-### 0.1.1-pre
+### 0.1.2-pre
 *
+
+### 0.1.1
+* Add build reports to readme
 
 ### 0.1.0
 * Set min node engine to v0.10.0
