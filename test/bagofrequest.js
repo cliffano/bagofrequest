@@ -8,6 +8,20 @@ buster.testCase('http - request', {
   setUp: function () {
     this.mock({});
   },
+  'should pass agentOptions to underlying request': function  (done) {
+    this.stub(request, 'post', function (params, cb) {
+      assert.equals(params.headers.foo, 'bar');
+      assert.equals(params.agentOptions.passphrase, 'a123');
+      cb(null, { statusCode: 200 });
+    });
+    function _success(result, cb) {
+      cb(null, result);
+    }
+    bag.request('POST', 'http://someurl', { headers: { foo: 'bar' },agentOptions: { passphrase: 'a123'}, handlers: { 200: _success }}, function (err, result) {
+      assert.isNull(err);
+      done();
+    });
+  },
   'should pass error to callback when there is an error while sending request': function (done) {
     this.stub(process, 'env', {});
     this.stub(request, 'get', function (params, cb) {
