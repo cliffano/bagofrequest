@@ -5,7 +5,7 @@
     "request",
     "proxy"
   ],
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "http://github.com/cliffano/bagofrequest",
   "author": "Cliffano Subagio <blah@cliffano.com> (http://blog.cliffano.com)",
   "contributors": [
@@ -24,8 +24,8 @@
     "test": "./test"
   },
   "dependencies": {
-    "async": "^0.9.0",
-    "request": "^2.55.0"
+    "async": "^1.2.1",
+    "request": "^2.58.0"
   },
   "devDependencies": {
     "buster-node": "^0.7.1",

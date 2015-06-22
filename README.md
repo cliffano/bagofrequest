@@ -1,9 +1,9 @@
 <img align="right" src="https://raw.github.com/cliffano/bagofrequest/master/avatar.jpg" alt="Avatar"/>
 
-[![Build Status](https://secure.travis-ci.org/cliffano/bagofrequest.png?branch=master)](http://travis-ci.org/cliffano/bagofrequest)
-[![Dependencies Status](https://david-dm.org/cliffano/bagofrequest.png)](http://david-dm.org/cliffano/bagofrequest)
-[![Coverage Status](https://coveralls.io/repos/cliffano/bagofrequest/badge.png?branch=master)](https://coveralls.io/r/cliffano/bagofrequest?branch=master)
-[![Published Version](https://badge.fury.io/js/bagofrequest.png)](http://badge.fury.io/js/bagofrequest)
+[![Build Status](https://img.shields.io/travis/cliffano/bagofrequest.svg)](http://travis-ci.org/cliffano/bagofrequest)
+[![Dependencies Status](https://img.shields.io/david/cliffano/bagofrequest.svg)](http://david-dm.org/cliffano/bagofrequest)
+[![Coverage Status](https://img.shields.io/coveralls/cliffano/bagofrequest.svg)](https://coveralls.io/r/cliffano/bagofrequest?branch=master)
+[![Published Version](https://img.shields.io/npm/v/bagofrequest.svg)](http://www.npmjs.com/package/bagofrequest)
 <br/>
 [![npm Badge](https://nodei.co/npm/bagofrequest.png)](http://npmjs.org/package/bagofrequest)
 
@@ -133,8 +133,8 @@ Colophon
 
 Build reports:
 
-* [Code complexity report](http://cliffano.github.io/bagofrequest/bob/complexity/plato/index.html)
-* [Unit tests report](http://cliffano.github.io/bagofrequest/bob/test/buster.out)
-* [Test coverage report](http://cliffano.github.io/bagofrequest/bob/coverage/buster-istanbul/lcov-report/lib/index.html)
-* [Integration tests report](http://cliffano.github.io/bagofrequest/bob/test-integration/buster.out)
-* [API Documentation](http://cliffano.github.io/bagofrequest/bob/doc/dox-foundation/index.html)
+* [Code complexity report](http://cliffano.github.io/bagofrequest/complexity/plato/index.html)
+* [Unit tests report](http://cliffano.github.io/bagofrequest/test/buster.out)
+* [Test coverage report](http://cliffano.github.io/bagofrequest/coverage/buster-istanbul/lcov-report/lib/index.html)
+* [Integration tests report](http://cliffano.github.io/bagofrequest/test-integration/buster.out)
+* [API Documentation](http://cliffano.github.io/bagofrequest/doc/dox-foundation/index.html)
