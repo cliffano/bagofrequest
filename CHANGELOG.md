@@ -1,4 +1,7 @@
-### 0.1.2-pre
+### 0.1.3-pre
+*
+
+### 0.1.2
 * Add agentOptions param passing [Benedikt Arnold](https://github.com/benediktarnold)
 
 ### 0.1.1
