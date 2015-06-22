@@ -1,5 +1,5 @@
 ### 0.1.2-pre
-*
+* Add agentOptions param passing [Benedikt Arnold](https://github.com/benediktarnold)
 
 ### 0.1.1
 * Add build reports to readme
