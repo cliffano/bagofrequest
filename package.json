@@ -24,8 +24,8 @@
     "test": "./test"
   },
   "dependencies": {
-    "async": "^1.2.1",
-    "request": "^2.58.0"
+    "async": "^1.5.0",
+    "request": "^2.65.0"
   },
   "devDependencies": {
     "buster-node": "^0.7.1",
