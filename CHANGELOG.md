@@ -1,5 +1,5 @@
 ### 0.1.3-pre
-*
+* Set min node engine to v4.0.0
 
 ### 0.1.2
 * Add agentOptions param passing [Benedikt Arnold](https://github.com/benediktarnold)
