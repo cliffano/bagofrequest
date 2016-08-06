@@ -24,12 +24,12 @@
     "test": "./test"
   },
   "dependencies": {
-    "async": "^1.5.0",
-    "request": "^2.65.0"
+    "async": "^2.0.1",
+    "request": "^2.74.0"
   },
   "devDependencies": {
     "buster-node": "^0.7.1",
-    "referee": "^1.1.1"
+    "referee": "^1.2.0"
   },
   "scripts": {},
   "engines": {
