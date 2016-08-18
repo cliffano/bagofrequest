@@ -11,7 +11,7 @@ Bag Of Request
 --------------
 Bag Of Request contains request utility functions.
 
-bagofrequest#request 
+bagofrequest#request
 
 Send http request using [mikeal/request](http://github.com/mikeal/request), with the following additional features:
 
@@ -34,6 +34,7 @@ Proxy retrieval based on URL and environment variables:
 * if URL uses https, then sets proxy to htps_proxy or HTTPS_PROXY, otherwise fallback to http_proxy or HTTP_PROXY
 * if URL does not have a protocol, assume http protocol
 * if URL is not provided, then set proxy to http_proxy or HTTP_PROXY, otherwise fallback to https_proxy or HTTPS_PROXY
+* proxy will be ignored if host is on no_proxy or NO_PROXY when provided, otherwise ignore 127.0.0.1 and localhost
 
 Installation
 ------------
@@ -98,7 +99,7 @@ Request:
     // send request with retry settings
     bag.request('get', 'http://somehost', {
         retry: {
-          errorCodes: true, // retry on any error 
+          errorCodes: true, // retry on any error
           statusCodes: [404, 503], // retry when response status code is 404 or 503
           scale: 0.5, // increase delay by half on each retry
           delay: 1000, // wait 1 second before retrying

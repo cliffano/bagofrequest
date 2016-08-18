@@ -1,7 +1,7 @@
 ### 0.1.4
-*
+* Add noproxy environment variable support
 
-### 0.1.3-pre
+### 0.1.3
 * Set min node engine to v4.0.0
 
 ### 0.1.2

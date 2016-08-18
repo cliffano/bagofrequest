@@ -617,6 +617,26 @@ buster.testCase('http - proxy', {
     assert.equals(bag.proxy('https://localhost/somepath'), undefined);
     assert.equals(bag.proxy('https://127.0.0.1/somepath'), undefined);
   },
+  'should return undefined when host is in noproxy environment variable': function () {
+    this.stub(process, 'env', { NO_PROXY: 'noproxy1', HTTP_PROXY: 'http://someproxy', HTTPS_PROXY: 'https://someproxy' });
+    assert.equals(bag.proxy('http://noproxy1/somepath'), undefined);
+    assert.equals(bag.proxy('https://noproxy1/somepath'), undefined);
+  },
+  'should return undefined when host is in noproxy environment variable comma-separated-value': function () {
+    this.stub(process, 'env', { no_proxy: 'noproxy1,noproxy2', HTTP_PROXY: 'http://someproxy', HTTPS_PROXY: 'https://someproxy' });
+    assert.equals(bag.proxy('http://noproxy1/somepath'), undefined);
+    assert.equals(bag.proxy('https://noproxy2/somepath'), undefined);
+  },
+  'should return proxy based on protocols when noproxy environment variable is undefined': function () {
+    this.stub(process, 'env', { no_proxy: undefined, HTTP_PROXY: 'http://someproxy', HTTPS_PROXY: 'https://someproxy' });
+    assert.equals(bag.proxy('http://noproxy1/somepath'), 'http://someproxy');
+    assert.equals(bag.proxy('https://noproxy2/somepath'), 'https://someproxy');
+  },
+  'should return proxy based on protocols when noproxy environment variable is an empty string': function () {
+    this.stub(process, 'env', { no_proxy: '', HTTP_PROXY: 'http://someproxy', HTTPS_PROXY: 'https://someproxy' });
+    assert.equals(bag.proxy('http://noproxy1/somepath'), 'http://someproxy');
+    assert.equals(bag.proxy('https://noproxy2/somepath'), 'https://someproxy');
+  },
   'should return undefined when host is on custom ignore host list': function () {
     var opts = {
       noProxyHosts: ['somehost1', 'somehost2']
