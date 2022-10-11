@@ -130,12 +130,12 @@ Proxy:
 Colophon
 --------
 
-[Developer's Guide](http://cliffano.github.io/developers_guide.html#nodejs)
+[Developer's Guide](https://cliffano.github.io/developers_guide.html#nodejs)
 
 Build reports:
 
-* [Code complexity report](http://cliffano.github.io/bagofrequest/complexity/plato/index.html)
-* [Unit tests report](http://cliffano.github.io/bagofrequest/test/buster.out)
-* [Test coverage report](http://cliffano.github.io/bagofrequest/coverage/buster-istanbul/lcov-report/lib/index.html)
-* [Integration tests report](http://cliffano.github.io/bagofrequest/test-integration/buster.out)
-* [API Documentation](http://cliffano.github.io/bagofrequest/doc/dox-foundation/index.html)
+* [Code complexity report](https://cliffano.github.io/bagofrequest/complexity/plato/index.html)
+* [Unit tests report](https://cliffano.github.io/bagofrequest/test/buster.out)
+* [Test coverage report](https://cliffano.github.io/bagofrequest/coverage/buster-istanbul/lcov-report/lib/index.html)
+* [Integration tests report](https://cliffano.github.io/bagofrequest/test-integration/buster.out)
+* [API Documentation](https://cliffano.github.io/bagofrequest/doc/dox-foundation/index.html)
